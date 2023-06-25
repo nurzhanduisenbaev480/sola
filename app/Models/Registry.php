@@ -17,4 +17,9 @@ class Registry extends Model
         'user_id',
         'status_id',
     ];
+
+    public function getOverheads(): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->hasMany(Overhead::class, 'registry_id','id')->get();
+    }
 }

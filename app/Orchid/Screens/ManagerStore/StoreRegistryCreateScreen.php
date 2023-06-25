@@ -100,7 +100,7 @@ class StoreRegistryCreateScreen extends Screen
         if ($registry){
             $overheads = Overhead::whereIn('id', $data["overheads"]);
             //dd($overheads->get());
-            $res = $overheads->update(['registry_id', $registry->id, 'last_status'=>9]);
+            $res = $overheads->update(['registry_id'=> $registry->id, 'last_status'=>9]);
             if ($res){
                 foreach ($overheads->get() as $overhead){
                     $history = History::create([

@@ -70,7 +70,6 @@ Route::screen('/store/edit/{overhead}', StoreEditScreen::class)
 Route::screen('/store/create', StoreRegistryCreateScreen::class)
     ->name('platform.store.create');
 
-
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
     ->name('platform.profile')

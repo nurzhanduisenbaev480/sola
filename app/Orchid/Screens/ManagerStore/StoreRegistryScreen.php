@@ -5,7 +5,9 @@ namespace App\Orchid\Screens\ManagerStore;
 use App\Models\City;
 use App\Models\Registry;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Input;
@@ -47,10 +49,6 @@ class StoreRegistryScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-//            ModalToggle::make('Создать')
-//                ->method('createRegistry')
-//                ->modal('createRegistry')
-//                ->icon('bs.file-word')
             Link::make('Создать')->icon('bs.file-word')->route('platform.store.create')
         ];
     }
@@ -73,11 +71,13 @@ class StoreRegistryScreen extends Screen
                 TD::make('user_id', 'Автор')->render(function(Registry $registry){
                     return User::find($registry->user_id)->name;
                 }),
+                TD::make('actions', 'Действие')->render(function (Registry $registry){
+                    return Link::make('Печать')
+                        ->icon('bs.printer')
+                        ->route('platform.registry.printPdf', compact('registry'));
+                })->width(100)
             ]),
-//            Layout::modal('createRegistry', Layout::rows([
-//                Input::make('user_id')->type('hidden')->value(Auth::user()->id),
-//
-//            ]))
+
         ];
     }
 }
