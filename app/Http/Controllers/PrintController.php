@@ -13,7 +13,7 @@ class PrintController extends Controller
         $registry = Registry::find($request->registry);
         //dd($registry->getOverheads());
         $overheads = $registry->getOverheads();
-        $pdf = Pdf::loadView('pdf.registry', compact('overheads'));
+        $pdf = Pdf::loadView('pdf.registry', compact('overheads'))->setPaper('a4', 'landscape');
         return $pdf->download('invoice.pdf');
     }
 }

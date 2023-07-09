@@ -1,21 +1,16 @@
 <?php
 
-namespace App\Orchid\Screens\ManagerStore;
+namespace App\Orchid\Screens\SuperAdmin;
 
 use App\Models\City;
 use App\Models\Registry;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Actions\ModalToggle;
-use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
 use Orchid\Screen\TD;
 use Orchid\Support\Facades\Layout;
 
-class StoreRegistryScreen extends Screen
+class RegistryScreen extends Screen
 {
     /**
      * Fetch data to be displayed on the screen.
@@ -25,9 +20,7 @@ class StoreRegistryScreen extends Screen
     public function query(): iterable
     {
         return [
-            'registries' => Registry::where('from_city', Auth::user()->from_city)
-                ->orWhere('to_city', Auth::user()->from_city)
-                ->orderBy('id', 'DESC')->paginate(100)
+            'registries'=>Registry::filters()->paginate(100)
         ];
     }
 
@@ -38,7 +31,7 @@ class StoreRegistryScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Список Реестров';
+        return 'Реестр';
     }
 
     /**
@@ -48,9 +41,7 @@ class StoreRegistryScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [
-            Link::make('Создать')->icon('bs.file-word')->route('platform.store.create')
-        ];
+        return [];
     }
 
     /**
@@ -62,11 +53,11 @@ class StoreRegistryScreen extends Screen
     {
         return [
             Layout::table('registries', [
-                TD::make('from_city', 'Откуда')->render(function(Registry $registry){
-                    return "<a href=".route('platform.registry.edit', compact('registry')).">".City::find($registry->from_city)->city_name."</a>";
+                TD::make('from_city', 'Откуда')->sort()->render(function(Registry $registry){
+                    return "<a href=".route('platform.all.registry.edit', compact('registry')).">".City::find($registry->from_city)->city_name."</a>";
                 }),
-                TD::make('to_city', 'Куда')->render(function(Registry $registry){
-                    return "<a href=".route('platform.registry.edit', compact('registry')).">".City::find($registry->to_city)->city_name."</a>";
+                TD::make('to_city', 'Куда')->sort()->render(function(Registry $registry){
+                    return "<a href=".route('platform.all.registry.edit', compact('registry')).">".City::find($registry->to_city)->city_name."</a>";
                 }),
                 TD::make('user_id', 'Автор')->render(function(Registry $registry){
                     return User::find($registry->user_id)->name;
@@ -77,7 +68,6 @@ class StoreRegistryScreen extends Screen
                         ->route('platform.registry.printPdf', compact('registry'));
                 })->width(100)
             ]),
-
         ];
     }
 }

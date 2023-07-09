@@ -76,8 +76,8 @@ class TrackTable extends Table
     }
     public function needMovers($need_movers): String{
         return match ($need_movers) {
-            1 => "Забор",
-            2 => "Доставка",
+            1 => "При забор",
+            2 => "При доставка",
             3 => "Оба",
             default => "Не установлен",
         };

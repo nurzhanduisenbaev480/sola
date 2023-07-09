@@ -107,16 +107,16 @@ class OrderEditScreen extends Screen
                 Group::make([
                     Select::make('overhead.company_type')->options(['1'=>'Юр.лицо', '2'=>'Физ.лицо'])->title('Юр/Физ лицо'),
                     Select::make('overhead.is_package')->options(['1'=>'Да', '2'=>'Нет'])->title('Упаковка'),
-                    Select::make('overhead.need_movers')->options(['1'=>'Забор', '2'=>'Доставка', '3'=>'Оба'])->title('Грузчики'),
+                    Select::make('overhead.need_movers')->options(['1'=>'При заборе', '2'=>'При доставка', '3'=>'Оба'])->title('Грузчики'),
                 ]),
                 Group::make([
-                    Input::make('overhead.mass')->placeholder('0.0')->title('Масса'),
-                    Input::make('overhead.length')->placeholder('0.0')->title('Длина'),
-                    Input::make('overhead.width')->placeholder('0.0')->title('Ширина'),
-                    Input::make('overhead.height')->placeholder('0.0')->title('Высота'),
+                    Input::make('overhead.mass')->placeholder('0.0')->title('Масса(кг)'),
+                    Input::make('overhead.length')->placeholder('0.0')->title('Длина(см)'),
+                    Input::make('overhead.width')->placeholder('0.0')->title('Ширина(см)'),
+                    Input::make('overhead.height')->placeholder('0.0')->title('Высота(см)'),
                 ]),
                 TextArea::make('overhead.comment')->title('Комментарий')->rows(5),
-                TextArea::make('overhead.description')->title('Детали доставки')->rows(5),
+                //TextArea::make('overhead.description')->title('Детали доставки')->rows(5),
                 Button::make('Сохранить')
                     ->icon('save')
                     ->class('btn btn-link')

@@ -82,8 +82,10 @@ class StoreRegistryCreateScreen extends Screen
                                     ->checked(false);
                             }),
                         TD::make('overhead_code', '№ Накл-й'),
-                        TD::make('from_city', 'г. Отправителя')->render(function(Overhead $overhead){return City::find($overhead->from_city)->city_name;}),
-                        TD::make('to_city', 'г. Получателя')->render(function(Overhead $overhead){return City::find($overhead->to_city)->city_name;}),
+                        TD::make('from_city', 'г. Отправителя')
+                            ->render(function(Overhead $overhead){return City::find($overhead->from_city)->city_name;})->sort(),
+                        TD::make('to_city', 'г. Получателя')
+                            ->render(function(Overhead $overhead){return City::find($overhead->to_city)->city_name;}),
                         TD::make('from_name', 'Отправитель'),
                         TD::make('to_name', 'Получатель'),
                     ])

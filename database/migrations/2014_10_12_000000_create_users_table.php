@@ -27,6 +27,17 @@ return new class extends Migration
             $table->string('type')->nullable();
             $table->string('company_type')->nullable();
             $table->string('iin')->nullable();
+            $table->string('payment_type')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('company_address')->nullable();
+            $table->string('company_real_address')->nullable();
+            $table->string('bin')->nullable();
+            $table->string('bik')->nullable();
+            $table->string('payment_card')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('director_name')->nullable();
+            $table->string('phone')->nullable();
+            $table->integer('author')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

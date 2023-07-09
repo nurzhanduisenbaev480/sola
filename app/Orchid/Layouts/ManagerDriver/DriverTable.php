@@ -30,8 +30,12 @@ class DriverTable extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('order_code', '№ Заявки'),
-            TD::make('overhead_code', '№ Накл-й'),
+            TD::make('order_code', '№ Заявки')->render(function (Overhead $overhead){
+                return '<a href="'.route('platform.driver.edit', compact('overhead')).'">'.$overhead->order_code."</a>";
+            }),
+            TD::make('overhead_code', '№ Накл-й')->render(function (Overhead $overhead){
+                return '<a href="'.route('platform.driver.edit', compact('overhead')).'">'.$overhead->overhead_code."</a>";
+            }),
             TD::make('from_name', 'ФИО'),
             TD::make('from_city', 'Город')->render(function (Overhead $overhead){
                 return City::find($overhead->from_city)->city_name;
@@ -47,9 +51,7 @@ class DriverTable extends Table
     public function getModal($overhead): Link|string
     {
         return match ($overhead->last_status) {
-            4 => Link::make('Принять')->route('platform.driver.changeAccept', compact('overhead')),
             5 => Link::make('Забрать')->route('platform.driver.changeTake', compact('overhead')),
-            6 => Link::make('Завершить')->route('platform.driver.changeFinish', compact('overhead')),
             default => "Не установлен",
         };
     }

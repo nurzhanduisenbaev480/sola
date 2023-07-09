@@ -38,23 +38,23 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.display')
                 ->title('Главная')
                 ->route(config('platform.index')),
+            Menu::make('Мой кабинет')
+                ->icon('bs.handbag')
+                ->route('platform.client')->permission('platform.client'),
             Menu::make('Заявки')
                 ->icon('bs.handbag')
-                ->route('platform.orders'),
+                ->route('platform.orders')->permission('platform.logistic'),
             Menu::make('Забор')
                 ->icon('bs.calendar')
-                ->route('platform.tracks'),
+                ->route('platform.tracks')->permission('platform.track'),
             Menu::make('Заявки Водителя')
                 ->slug('driver-menu')
                 ->icon('bs.list-ul')
                 ->list([
-                    Menu::make('Заявки1')
+                    Menu::make('Заявки')
                         ->route('platform.driver.ordersFrom')
                         ->icon('bs.cart'),
-                    Menu::make('Заявки2')
-                        ->route('platform.driver.ordersTo')
-                        ->icon('bs.cart-check'),
-                ]),
+                ])->permission('platform.driver'),
             Menu::make('Склад')
                 ->slug('store-menu')
                 ->icon('bs.shop-window')
@@ -65,8 +65,23 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make('Реестр')
                         ->route('platform.registry')
                         ->icon('bs.file-word'),
-                ]),
-
+                ])->permission('platform.store'),
+            //platform.all
+            Menu::make('Управления')
+                ->slug('admin-menu')
+                ->icon('bs.gear')
+                ->list([
+                    Menu::make('Заявки')
+                        ->route('platform.all')
+                        ->icon('bs.cart'),
+                    Menu::make('Реестр')
+                        ->route('platform.all.registry')
+                        ->icon('bs.file-word'),
+                    Menu::make('Контрагент')
+                        ->route('platform.all.counterparty')
+                        ->icon('bs.people'),
+                ])
+                ->permission('platform.super'),
             Menu::make(__('Users'))
                 ->icon('bs.people')
                 ->route('platform.systems.users')
@@ -92,6 +107,13 @@ class PlatformProvider extends OrchidServiceProvider
             ItemPermission::group(__('System'))
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users')),
+            ItemPermission::group('Для сотрудников')
+                ->addPermission('platform.logistic', 'Оператор')
+                ->addPermission('platform.track', 'Менеджер логист')
+                ->addPermission('platform.store', 'Склад')
+                ->addPermission('platform.driver', 'Водитель')
+                ->addPermission('platform.super', 'Супер Администратор')
+                ->addPermission('platform.client', 'Клиент')
         ];
     }
 }

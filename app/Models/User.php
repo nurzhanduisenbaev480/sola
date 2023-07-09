@@ -2,13 +2,25 @@
 
 namespace App\Models;
 
+use App\Orchid\Presenters\UserPresenter;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
+use Orchid\Access\UserAccess;
+use Orchid\Attachment\Attachable;
+use Orchid\Filters\Filterable;
 use Orchid\Filters\Types\Like;
 use Orchid\Filters\Types\Where;
 use Orchid\Filters\Types\WhereDateStartEnd;
+use Orchid\Metrics\Chartable;
 use Orchid\Platform\Models\User as Authenticatable;
+use Orchid\Screen\AsSource;
+use Orchid\Support\Facades\Dashboard;
 
 class User extends Authenticatable
 {
+    use Attachable;
+    use Notifiable, UserAccess, AsSource, Filterable, Chartable, HasFactory;
     /**
      * The attributes that are mass assignable.
      *
@@ -27,6 +39,18 @@ class User extends Authenticatable
         'company_type',
         'iin',
         'permissions',
+        'payment_type',
+        'company_name',
+        'company_address',
+        'company_real_address',
+        'bin',
+        'bik',
+        'payment_card',
+        'bank_name',
+        'director_name',
+        'email',
+        'phone',
+        'author'
     ];
 
     /**
@@ -75,4 +99,23 @@ class User extends Authenticatable
         'updated_at',
         'created_at',
     ];
+    public static function createAdmin(string $name, string $email, string $password): void
+    {
+        throw_if(static::where('email', $email)->exists(), 'User exists');
+
+        static::create([
+            'name'        => $name,
+            'email'       => $email,
+            'password'    => Hash::make($password),
+            'permissions' => Dashboard::getAllowAllPermission(),
+        ]);
+    }
+
+    /**
+     * @return UserPresenter
+     */
+    public function presenter()
+    {
+        return new UserPresenter($this);
+    }
 }

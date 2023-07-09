@@ -64,9 +64,9 @@ class TrackListScreen extends Screen
             TrackTable::class,
             Layout::modal('trackDriver', Layout::rows([
                 Input::make('overhead.id')->type('hidden'),
-                Select::make('overhead.driver')
+                Select::make('overhead.driver')->title('ФИО Водителя')
                     ->fromQuery(User::where("type", "driver"), "name"),
-                Relation::make('overhead.transport_id')
+                Relation::make('overhead.transport_id')->title('Выберите транспорт')
                     ->fromModel(Transport::class, 'transport_name')
             ]))->async('asyncGetTrack')
         ];

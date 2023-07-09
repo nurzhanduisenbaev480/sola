@@ -17,7 +17,7 @@ class StoreListScreen extends Screen
      */
     public function query(): iterable
     {
-        $overheads = Overhead::whereIn('last_status', [7,8])->paginate(100);
+        $overheads = Overhead::whereIn('last_status', [6,7,8])->paginate(100);
         return [
             'overheads' => $overheads
         ];

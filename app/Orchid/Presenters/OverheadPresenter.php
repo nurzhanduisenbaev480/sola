@@ -12,12 +12,13 @@ class OverheadPresenter extends Presenter implements Searchable, Personable
     // Add your presenter methods here
     public function perSearchShow(): int
     {
-        // TODO: Implement perSearchShow() method.
+        return 3;
     }
 
     public function searchQuery(string $query = null): Builder
     {
-        // TODO: Implement searchQuery() method.
+//        dd($query);
+        return $this->entity->search($query)->where('overhead_code', $query);
     }
 
     public function label(): string
@@ -38,7 +39,7 @@ class OverheadPresenter extends Presenter implements Searchable, Personable
 
     public function url(): string
     {
-        return route('platform.systems.users.edit', $this->entity);
+        return "";
     }
 
     public function image(): ?string

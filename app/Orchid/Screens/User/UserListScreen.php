@@ -26,6 +26,7 @@ class UserListScreen extends Screen
     {
         return [
             'users' => User::with('roles')
+                ->where('type', '!=', "counterparty")
                 ->filters(UserFiltersLayout::class)
                 ->defaultSort('id', 'desc')
                 ->paginate(),

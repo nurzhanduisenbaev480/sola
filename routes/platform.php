@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\StatusController;
+use App\Orchid\Screens\Client\ClientOverheadCreateScreen;
+use App\Orchid\Screens\Client\ClientOverheadEditScreen;
+use App\Orchid\Screens\Client\ClientOverheadScreen;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -10,17 +14,27 @@ use App\Orchid\Screens\Examples\ExampleFieldsScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\ManagerDriver\DriverEditScreen;
 use App\Orchid\Screens\ManagerDriver\DriverListScreen;
+use App\Orchid\Screens\ManagerLogistician\OrderCreateScreen;
 use App\Orchid\Screens\ManagerLogistician\OrderEditScreen;
 use App\Orchid\Screens\ManagerLogistician\OrderListScreen;
 use App\Orchid\Screens\ManagerStore\StoreEditScreen;
 use App\Orchid\Screens\ManagerStore\StoreRegistryCreateScreen;
+use App\Orchid\Screens\ManagerStore\StoreRegistryEditScreen;
 use App\Orchid\Screens\ManagerStore\StoreRegistryScreen;
 use App\Orchid\Screens\ManagerTrack\TrackListScreen;
 use App\Orchid\Screens\ManagerStore\StoreListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
+use App\Orchid\Screens\SuperAdmin\AllOrdersScreen;
+use App\Orchid\Screens\SuperAdmin\CounterpartyEditScreen;
+use App\Orchid\Screens\SuperAdmin\CounterpartyScreen;
+use App\Orchid\Screens\SuperAdmin\OverheadEditScreen;
+use App\Orchid\Screens\SuperAdmin\RegistryEditScreen;
+use App\Orchid\Screens\SuperAdmin\RegistryOverheadEditScreen;
+use App\Orchid\Screens\SuperAdmin\RegistryScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -47,6 +61,8 @@ Route::screen('/orders', OrderListScreen::class)
     ->name('platform.orders');
 Route::screen('/orders/edit/{overhead}', OrderEditScreen::class)
     ->name('platform.orders.edit');
+Route::screen('/orders/create', OrderCreateScreen::class)
+    ->name('platform.orders.create');
 
 // Manager Track Panel
 Route::screen('/tracks', TrackListScreen::class)
@@ -56,19 +72,48 @@ Route::screen('/driver/orders-from', DriverListScreen::class)
     ->name('platform.driver.ordersFrom');
 Route::screen('/driver/orders-to', DriverListScreen::class)
     ->name('platform.driver.ordersTo');
-Route::get('/driver/change-accept', [\App\Http\Controllers\StatusController::class, 'changeAccept'])->name('platform.driver.changeAccept');
-Route::get('/driver/change-take', [\App\Http\Controllers\StatusController::class, 'changeTake'])->name('platform.driver.changeTake');
-Route::get('/driver/change-finish', [\App\Http\Controllers\StatusController::class, 'changeFinish'])->name('platform.driver.changeFinish');
+Route::screen('/driver/order/edit/{overhead}', DriverEditScreen::class)
+    ->name('platform.driver.edit');
+
+Route::get('/driver/change-accept', [StatusController::class, 'changeAccept'])->name('platform.driver.changeAccept');
+Route::get('/driver/change-take', [StatusController::class, 'changeTake'])->name('platform.driver.changeTake');
+Route::get('/driver/change-finish', [StatusController::class, 'changeFinish'])->name('platform.driver.changeFinish');
 
 // Store Panel
 Route::screen('/store', StoreListScreen::class)
     ->name('platform.store');
 Route::screen('/store/registry', StoreRegistryScreen::class)
     ->name('platform.registry');
+Route::screen('/store/registry/edit/{registry}', StoreRegistryEditScreen::class)
+    ->name('platform.registry.edit');
 Route::screen('/store/edit/{overhead}', StoreEditScreen::class)
     ->name('platform.store.edit');
 Route::screen('/store/create', StoreRegistryCreateScreen::class)
     ->name('platform.store.create');
+
+// Super Admin Panel
+Route::screen('/super/allOverheads', AllOrdersScreen::class)
+    ->name('platform.all');
+Route::screen('/super/edit/{overhead}', OverheadEditScreen::class)
+    ->name('platform.all.edit');
+Route::screen('/super/registry', RegistryScreen::class)
+    ->name('platform.all.registry');
+Route::screen('/super/registry/edit/{registry}', RegistryEditScreen::class)
+    ->name('platform.all.registry.edit');
+Route::screen('/super/edit2/{overhead}', RegistryOverheadEditScreen::class)
+    ->name('platform.all.edit2');
+Route::screen('/super/counterparty', CounterpartyScreen::class)
+    ->name('platform.all.counterparty');
+Route::screen('super/{user}/edit', CounterpartyEditScreen::class)
+    ->name('platform.all.counterparty.edit');
+
+// Client
+Route::screen('/client/overheads', ClientOverheadScreen::class)
+    ->name('platform.client');
+Route::screen('/client/overheads/create', ClientOverheadCreateScreen::class)
+    ->name('platform.client.create');
+Route::screen('/client/overheads/show/{overhead}', ClientOverheadEditScreen::class)
+    ->name('platform.client.show');
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
@@ -76,6 +121,8 @@ Route::screen('profile', UserProfileScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push(__('Profile'), route('platform.profile')));
+
+
 
 // Platform > System > Users > User
 Route::screen('users/{user}/edit', UserEditScreen::class)

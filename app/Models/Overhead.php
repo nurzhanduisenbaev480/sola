@@ -7,7 +7,9 @@ use App\Orchid\Presenters\OverheadPresenter;
 use App\Orchid\Presenters\ToPresenter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 use Orchid\Filters\Filterable;
+use Orchid\Filters\Types\Where;
 use Orchid\Screen\AsSource;
 
 class Overhead extends Model
@@ -50,23 +52,26 @@ class Overhead extends Model
         "transport_id",
         "registry_id",
     ];
+    protected $allowedFilters = [
+        'overhead_code'=>Where::class,
+        ];
 
-    protected $allowedSorts = ['from_city', 'to_city'];
+    protected $allowedSorts = ['overhead_code','from_city', 'to_city'];
 
     public function getHistories(){
         return $this->hasMany(History::class);
     }
 
-    public function presenterOverhead(): OverheadPresenter
+    public function presenter(): OverheadPresenter
     {
         return new OverheadPresenter($this);
     }
-    public function presenterFrom(): FromPresenter
+    public function toSearchableArray()
     {
-        return new FromPresenter($this);
-    }
-    public function presenterTo(): ToPresenter
-    {
-        return new ToPresenter($this);
+        $array = $this->toArray();
+
+        // Customize array...
+
+        return $array;
     }
 }
