@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Orchid\Screens\ManagerLogistician;
+namespace App\Orchid\Screens\SuperAdmin;
 
 use App\Models\City;
 use App\Models\History;
@@ -12,10 +12,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\ModalToggle;
-use Orchid\Screen\Fields\CheckBox;
+use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\TextArea;
@@ -24,7 +23,7 @@ use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
-class OrderCreateScreen extends Screen
+class SuperOverheadCreateScreen extends Screen
 {
     /**
      * Fetch data to be displayed on the screen.
@@ -116,18 +115,18 @@ class OrderCreateScreen extends Screen
                     Input::make('width')->placeholder('0.0')->title('Ширина(см)'),
                     Input::make('height')->placeholder('0.0')->title('Высота(см)'),
                 ]),
-				Group::make([
+                Group::make([
                     Select::make('nds')->options([
                         'SALAR'=>'SALAR',
                         'ALEM'=>'ALEM'
                     ])->title('С/Без НДС'),
-					Input::make('sum')->placeholder('Введите сумму')->title('Сумма перевозки(тг)'),
+                    Input::make('sum')->placeholder('Введите сумму')->title('Сумма перевозки(тг)'),
 
-				]),
-				Group::make([
-					Input::make('product_name')->title('Наименование товаров'),
-					Input::make('place')->title('Количество мест'),
-				]),
+                ]),
+                Group::make([
+                    Input::make('product_name')->title('Наименование товаров'),
+                    Input::make('place')->title('Количество мест'),
+                ]),
                 TextArea::make('comment')->title('Комментарий')->rows(5),
                 //TextArea::make('description')->title('Детали доставки')->rows(5),
                 Button::make('Сохранить')->icon('bs.file-plus')->method('createOverhead')
@@ -157,7 +156,6 @@ class OrderCreateScreen extends Screen
             ]))->title('Добавить контрагент'),
         ];
     }
-
     public function createCounterparty1(Request $request){
         $data = $request->except('_token');
         if (empty($data['email'])){
@@ -234,7 +232,6 @@ class OrderCreateScreen extends Screen
             ]);
             if ($history){
                 Toast::info("Заявка под номером №".$overhead->overhead_code." была создана");
-                return redirect()->route('platform.all');
             }
         }else{
             Toast::warning("Заявка не создалась. Пожалуйста проверьте полей, или обратитесь к администратору");

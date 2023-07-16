@@ -35,6 +35,7 @@ use App\Orchid\Screens\SuperAdmin\OverheadEditScreen;
 use App\Orchid\Screens\SuperAdmin\RegistryEditScreen;
 use App\Orchid\Screens\SuperAdmin\RegistryOverheadEditScreen;
 use App\Orchid\Screens\SuperAdmin\RegistryScreen;
+use App\Orchid\Screens\SuperAdmin\SuperOverheadCreateScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -94,6 +95,8 @@ Route::screen('/store/create', StoreRegistryCreateScreen::class)
 // Super Admin Panel
 Route::screen('/super/allOverheads', AllOrdersScreen::class)
     ->name('platform.all');
+Route::screen('/super/allOverheads/create', SuperOverheadCreateScreen::class)
+    ->name('platform.all.create.overhead');
 Route::screen('/super/edit/{overhead}', OverheadEditScreen::class)
     ->name('platform.all.edit');
 Route::screen('/super/registry', RegistryScreen::class)

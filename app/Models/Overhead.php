@@ -41,7 +41,9 @@ class Overhead extends Model
         "length",
         "volume",
         "price",
+		"sum",
         "need_movers", // Необходимы грузчики забор
+        "movers_count",
         "comment",
         "description",
         "order_start_date",
@@ -51,6 +53,9 @@ class Overhead extends Model
         "driver",
         "transport_id",
         "registry_id",
+		"nds",
+		"product_name",
+		"place",
     ];
     protected $allowedFilters = [
         'overhead_code'=>Where::class,

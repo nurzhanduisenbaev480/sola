@@ -10,7 +10,7 @@ use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
-class OrderTable extends Table
+class OrderTable3 extends Table
 {
     /**
      * Data source.
@@ -20,7 +20,7 @@ class OrderTable extends Table
      *
      * @var string
      */
-    protected $target = 'overheads1';
+    protected $target = 'overheads3';
 
     /**
      * Get the table cells to be displayed.
@@ -31,7 +31,7 @@ class OrderTable extends Table
     {
         return [
             TD::make('order_code', '№ Заявки'),
-            TD::make('overhead_code', '№ Накл-й'),
+            TD::make('overhead_code', '№ Накл-й')->filter(),
             TD::make('from_city', 'г. Отправителя')->render(function (Overhead $overhead){
                 return City::where('city_id', $overhead->from_city)->get()->first()->city_name;
             }),
@@ -45,13 +45,7 @@ class OrderTable extends Table
 			TD::make('user_id', 'Автор')->render(function(Overhead $overhead){
 				return User::find($overhead->user_id)->name;
 			}),
-            TD::make('actions', 'Действие')->render(function (Overhead $overhead){
-                if($overhead->last_status == 1 || $overhead->last_status == 2){
-					return Link::make('Редактировать')
-                    	->route('platform.orders.edit', compact('overhead'));
-				}
-				return "Обработан";
-            }),
+           
         ];
     }
 }

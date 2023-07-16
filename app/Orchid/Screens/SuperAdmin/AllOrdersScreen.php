@@ -3,9 +3,11 @@
 namespace App\Orchid\Screens\SuperAdmin;
 
 use App\Models\City;
+use App\Models\User;
 use App\Models\Overhead;
 use App\Orchid\Filters\OverheadFilter;
 use Illuminate\Http\Request;
+use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
@@ -48,7 +50,9 @@ class AllOrdersScreen extends Screen
     }
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Link::make("Создать")->route('platform.all.create.overhead')
+        ];
     }
 
     /**
@@ -85,6 +89,10 @@ class AllOrdersScreen extends Screen
                                 "<div class='sola-order'><span>Масса: </span><span class='sola-font-weight'>".$overhead->mass."</span></div>".
                                 "<div class='sola-order'><span>Объем: </span><span class='sola-font-weight'>".$overhead->volume."</span></div>";
                         }),
+						TD::make('sum', 'Цена'),
+						TD::make('user_id','Автор')->render(function(Overhead $overhead){
+							return User::find($overhead->user_id)->name;
+						}),
                         TD::make('actions', 'Действие')->render(function (Overhead $overhead){
                             return Link::make('Редактировать')->icon('bs.pen')->route('platform.all.edit', compact('overhead'));
                         }),

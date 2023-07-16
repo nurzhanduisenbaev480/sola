@@ -3,7 +3,7 @@
 <head>
     <title>invoice card - Bootdey.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .table td, .table th{
@@ -37,6 +37,32 @@
                     <th>Адрес доставки</th>
                 </tr>
                 </thead>
+				<tbody>
+					@php $i=0;@endphp
+					@foreach($overheads as $overhead)
+					@php $i++;@endphp
+					<tr>
+						<td>{{$i}}</td>
+						<td>{{$overhead->overhead_code}}</td>
+						@if($overhead->nds == 1)
+							<td>ALSI</td>
+						@else
+							<td>SALAR</td>
+						@endif
+						<td>{{$overhead->to_company}}</td>
+						<td>{{$overhead->to_name}}</td>
+						<td>{{$overhead->to_phone}}</td>
+						<td>{{App\Models\City::find($overhead->to_city)->city_name}}</td>
+						<td>{{$overhead->to_address}}</td>
+						<td>{{$overhead->from_company}}</td>
+						<td>{{$overhead->product_name}}</td>
+						<td>{{$overhead->place}}</td>
+						<td>{{$overhead->mass}}</td>
+						<td>{{$overhead->volume}}</td>
+						<td></td>
+					</tr>
+					@endforeach
+				</tbody>
             </table>
         </div>
     </div>
