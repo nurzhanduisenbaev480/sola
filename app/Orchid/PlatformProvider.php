@@ -37,7 +37,7 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Панель Управления')
                 ->icon('bs.display')
                 ->title('Главная')
-                ->route('platform.index'),
+                ->route('platform.main'),
             Menu::make('Мой кабинет')
                 ->icon('bs.handbag')
                 ->route('platform.client')->permission('platform.client'),
