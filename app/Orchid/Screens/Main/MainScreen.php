@@ -12,7 +12,7 @@ use Orchid\Screen\Screen;
 use Orchid\Screen\TD;
 use Orchid\Support\Facades\Layout;
 
-class PlatformScreen extends Screen
+class MainScreen extends Screen
 {
     /**
      * Fetch data to be displayed on the screen.

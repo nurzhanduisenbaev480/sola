@@ -84,9 +84,12 @@ class DriverEditScreen extends Screen
                     Input::make('overhead.from_address')->placeholder('ул Тест, ...')->title('Адрес')->readonly(),
                 ]),
 
-
+				Group::make([
+					Input::make('overhead.product_name')->title('Наименование товаров'),
+					Input::make('overhead.place')->title('Количество мест'),
+				]),
                 Select::make('overhead.is_package')->options(['1'=>'Да', '2'=>'Нет'])->title('Упаковка'),
-
+				
                 TextArea::make('overhead.description')->title('Детали доставки')->rows(5),
                 Button::make('Сохранить')
                     ->icon('save')

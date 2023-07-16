@@ -42,6 +42,8 @@ return new class extends Migration
             $table->float("price")->default(0.0)->nullable(); // Цена
             $table->text("comment")->nullable();
             $table->text("description")->nullable();
+			
+			$table->text("nds")->nullable(); // С НДС или без
 
             $table->integer("last_status")->nullable(); // Последний статус
             $table->integer("driver")->nullable(); // Водитель

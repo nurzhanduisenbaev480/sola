@@ -7,6 +7,9 @@ use App\Models\History;
 use App\Models\User;
 use App\Models\Overhead;
 use App\Orchid\Layouts\ManagerLogistician\OrderTable;
+use App\Orchid\Layouts\ManagerLogistician\OrderTable2;
+use App\Orchid\Layouts\ManagerLogistician\OrderTable3;
+use App\Orchid\Layouts\ManagerLogistician\OrderTable4;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -32,10 +35,19 @@ class OrderListScreen extends Screen
      */
     public function query(): iterable
     {
-        $overheads = Overhead::whereIn('last_status', [1,2])->paginate(100);
-
+        $overheads1 = Overhead::whereIn('last_status', [1,2,3])->filters()
+			->orderBy('id', 'DESC')
+			->paginate(100); // operator
+		$overheads2 = Overhead::whereIn('last_status', [4,6])->filters()
+			->orderBy('id', 'DESC')
+			->paginate(100); // driver take , driver set
+		$overheads3 = Overhead::whereIn('last_status', [7])->filters()
+			->orderBy('id', 'DESC')
+			->paginate(100); // store
         return [
-            'overheads'=>$overheads,
+            'overheads1'=>$overheads1,
+			'overheads2'=>$overheads2,
+			'overheads3'=>$overheads3,
         ];
     }
 
@@ -71,6 +83,10 @@ class OrderListScreen extends Screen
     {
         return [
             OrderTable::class,
+			Layout::view('orderTable2'),
+			OrderTable2::class,
+			Layout::view('orderTable3'),
+			OrderTable3::class,
         ];
     }
 

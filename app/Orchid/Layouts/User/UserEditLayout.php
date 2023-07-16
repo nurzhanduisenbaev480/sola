@@ -53,6 +53,7 @@ class UserEditLayout extends Rows
                     'user'=>'Пользователь',
                     'manager'=>'Менеджер',
                     'superadmin'=>'Суперадмин',
+					'client'=>'Клиент'
                 ])
                 ->title('Тип пользователя'),
         ];

@@ -13,6 +13,7 @@ use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\TextArea;
@@ -101,6 +102,17 @@ class OverheadEditScreen extends Screen
                     Input::make('overhead.width')->placeholder('0.0')->title('Ширина(см)'),
                     Input::make('overhead.height')->placeholder('0.0')->title('Высота(см)'),
                 ]),
+				Group::make([
+					Input::make('overhead.sum')->placeholder('Введите сумму')->title('Сумма(тг)'),
+					DateTimer::make('overhead.order_start_date')
+					->title('Дата начало')
+					->format24hr()
+					->enableTime(),
+				]),
+				Group::make([
+					Input::make('overhead.product_name')->title('Наименование товаров'),
+					Input::make('overhead.place')->title('Количество мест'),
+				]),
                 TextArea::make('overhead.comment')->title('Комментарий')->rows(5),
                 TextArea::make('overhead.description')->title('Детали доставки')->rows(5),
                 Button::make('Сохранить')

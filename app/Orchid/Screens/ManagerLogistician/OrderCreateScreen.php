@@ -15,6 +15,7 @@ use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\CheckBox;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\TextArea;
@@ -107,6 +108,18 @@ class OrderCreateScreen extends Screen
                     Input::make('width')->placeholder('0.0')->title('Ширина(см)'),
                     Input::make('height')->placeholder('0.0')->title('Высота(см)'),
                 ]),
+				Group::make([
+					Input::make('sum')->placeholder('Введите сумму')->title('Сумма(тг)'),
+					DateTimer::make('order_start_date')
+					->title('Дата начало')
+				
+					->format24hr()
+					->enableTime(),
+				]),
+				Group::make([
+					Input::make('product_name')->title('Наименование товаров'),
+					Input::make('place')->title('Количество мест'),
+				]),
                 TextArea::make('comment')->title('Комментарий')->rows(5),
                 //TextArea::make('description')->title('Детали доставки')->rows(5),
                 Button::make('Сохранить')->icon('bs.file-plus')->method('createOverhead')
@@ -123,7 +136,7 @@ class OrderCreateScreen extends Screen
                 Input::make('email')->title('Email')->placeholder(''),
                 Input::make('phone')->title('Контактный номер')->placeholder(''),
                 Upload::make('attachment')->title('Загрузить Договор')
-            ]))->title('Добавить контрагент'),
+            ]))->rawClick()->title('Добавить контрагент'),
             Layout::modal('createCounterparty2', Layout::rows([
                 Input::make('name')->title('ФИО')->placeholder(''),
                 Input::make('iin')->title('ИИН')->placeholder(''),
