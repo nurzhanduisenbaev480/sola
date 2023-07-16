@@ -14,6 +14,7 @@ use App\Orchid\Screens\Examples\ExampleFieldsScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\MainScreen;
 use App\Orchid\Screens\ManagerDriver\DriverEditScreen;
 use App\Orchid\Screens\ManagerDriver\DriverListScreen;
 use App\Orchid\Screens\ManagerLogistician\OrderCreateScreen;
@@ -54,8 +55,10 @@ use Tabuna\Breadcrumbs\Trail;
 */
 
 // Main
-Route::screen('/main', PlatformScreen::class)
-    ->name('platform.main');
+//Route::screen('/main', PlatformScreen::class)
+//    ->name('platform.main');
+Route::screen('/main', MainScreen::class)
+    ->name('platform.index');
 
 // Manager Logistical Panel
 Route::screen('/orders', OrderListScreen::class)
