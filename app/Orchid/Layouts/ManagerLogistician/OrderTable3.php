@@ -4,6 +4,7 @@ namespace App\Orchid\Layouts\ManagerLogistician;
 
 use App\Models\City;
 use App\Models\Overhead;
+use App\Models\Status;
 use App\Models\User;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
@@ -32,6 +33,10 @@ class OrderTable3 extends Table
         return [
             TD::make('order_code', '№ Заявки'),
             TD::make('overhead_code', '№ Накл-й')->filter(),
+            TD::make('order_start_date', 'Дата создания'),
+            TD::make('last_status', 'Статус')->render(function(Overhead $overhead){
+                return Status::find($overhead->last_status)->status_name;
+            }),
             TD::make('from_city', 'г. Отправителя')->render(function (Overhead $overhead){
                 return City::where('city_id', $overhead->from_city)->get()->first()->city_name;
             }),
@@ -45,7 +50,7 @@ class OrderTable3 extends Table
 			TD::make('user_id', 'Автор')->render(function(Overhead $overhead){
 				return User::find($overhead->user_id)->name;
 			}),
-           
+
         ];
     }
 }

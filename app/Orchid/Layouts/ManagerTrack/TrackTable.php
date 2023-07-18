@@ -4,6 +4,7 @@ namespace App\Orchid\Layouts\ManagerTrack;
 
 use App\Models\City;
 use App\Models\Overhead;
+use App\Models\Status;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Layouts\Table;
@@ -32,6 +33,10 @@ class TrackTable extends Table
             TD::make('overhead_code', '№')->render(function (Overhead $overhead) {
                 return "<div class='sola-order'><span>Заявка: </span><span class='sola-font-weight'>".$overhead->order_code."</span></div>".
                     "<div class='sola-order'><span>№: </span><span class='sola-font-weight'>".$overhead->overhead_code."</span></div>";
+            }),
+            TD::make('order_start_date', 'Дата создания'),
+            TD::make('last_status', 'Статус')->render(function(Overhead $overhead){
+                return Status::find($overhead->last_status)->status_name;
             }),
             TD::make('from', 'Отправитель')->render(function (Overhead $overhead){
                 return "<div class='sola-order'><span>ФИО: </span><span class='sola-font-weight'>".$overhead->from_name."</span></div>".

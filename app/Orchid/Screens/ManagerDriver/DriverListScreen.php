@@ -27,7 +27,7 @@ class DriverListScreen extends Screen
                 Toast::warning(Session::get('message'));
             }
         }
-        $overheads = Overhead::where('last_status', 5)->where('driver', Auth::user()->id)->paginate(100);
+        $overheads = Overhead::whereIn('last_status', [4,6])->where('driver', Auth::user()->id)->paginate(100);
 
         return [
             'overheads'=>$overheads,

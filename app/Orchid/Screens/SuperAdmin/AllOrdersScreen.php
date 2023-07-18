@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\SuperAdmin;
 
 use App\Models\City;
+use App\Models\Status;
 use App\Models\User;
 use App\Models\Overhead;
 use App\Orchid\Filters\OverheadFilter;
@@ -68,6 +69,10 @@ class AllOrdersScreen extends Screen
                     Layout::table('overheads', [
                         TD::make('overhead_code', '№')->filter(TD::FILTER_TEXT)->render(function (Overhead $overhead){
                             return '<a href="'.route('platform.all.edit', compact('overhead')).'">'.$overhead->overhead_code.'</a>';
+                        }),
+                        TD::make('order_start_date', 'Дата создания'),
+                        TD::make('last_status', 'Статус')->render(function(Overhead $overhead){
+                            return Status::find($overhead->last_status)->status_name;
                         }),
                         TD::make('from', 'Отправитель')->render(function (Overhead $overhead){
                             return "<div class='sola-order'><span>ФИО: </span><span class='sola-font-weight'>".$overhead->from_name."</span></div>".

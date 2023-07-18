@@ -4,6 +4,7 @@ namespace App\Orchid\Layouts\ManagerStore;
 
 use App\Models\City;
 use App\Models\Overhead;
+use App\Models\Status;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Layouts\Table;
@@ -31,6 +32,10 @@ class StoreTable extends Table
         return [
             TD::make('overhead_code', '№')->render(function (Overhead $overhead){
                 return '<a href="'.route('platform.store.edit', compact('overhead')).'">'.$overhead->overhead_code."</a>";
+            }),
+            TD::make('order_start_date', 'Дата создания'),
+            TD::make('last_status', 'Статус')->render(function(Overhead $overhead){
+                return Status::find($overhead->last_status)->status_name;
             }),
             TD::make('from', 'Отправитель')->render(function (Overhead $overhead){
                 return "<div class='sola-order'><span>ФИО: </span><span class='sola-font-weight'>".$overhead->from_name."</span></div>".

@@ -51,8 +51,8 @@ class DriverTable extends Table
     public function getModal($overhead): Link|string
     {
         return match ($overhead->last_status) {
-            5 => Link::make('Забрать')->route('platform.driver.changeTake', compact('overhead')),
-            default => "Не установлен",
+            4 => Link::make('Забрать')->route('platform.driver.changeTake', compact('overhead')),
+            default => "Обработан",
         };
     }
 
